@@ -1,7 +1,14 @@
 import Head from 'next/head'
+import useSWR from 'swr'
+
 import styles from '../styles/Home.module.css'
 
 export default function Home() {
+  const { data, error } = useSWR('/api/user/get?id=1', url => fetch(url).then(response => response.json()))
+
+  if (error) return <div>failed to load</div>
+  if (!data) return <div>loading...</div>
+
   return (
     <div className={styles.container}>
       <Head>
@@ -11,7 +18,7 @@ export default function Home() {
 
       <main className={styles.main}>
         <h1 className={styles.title}>
-          You see deep space, but he not see you
+          {`Hello, ${data.user.name}`}
         </h1>
 
         <p className={styles.description}>
