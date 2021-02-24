@@ -1,13 +1,16 @@
 import Head from 'next/head'
-import useSWR from 'swr'
+import { useGetUserQuery } from '../api/generated'
 
 import styles from '../styles/Home.module.css'
 
 export default function Home() {
-  const { data, error } = useSWR('/api/user/get?id=1', url => fetch(url).then(response => response.json()))
+  const { data, loading, error } = useGetUserQuery({
+    variables: { id: 1 },
+  })
 
   if (error) return <div>failed to load</div>
-  if (!data) return <div>loading...</div>
+  if (loading) return <div>loading...</div>
+  if (!data || !data.getUser) return <div>user not found</div>
 
   return (
     <div className={styles.container}>
@@ -18,7 +21,7 @@ export default function Home() {
 
       <main className={styles.main}>
         <h1 className={styles.title}>
-          {`Hello, ${data.user.name}`}
+          {`Hello, ${data.getUser.name}`}
         </h1>
 
         <p className={styles.description}>

@@ -7,8 +7,8 @@ async function rewrites() {
 
   return [
     {
-      source: '/api/:path*',
-      destination: 'http://localhost:8080/api/:path*',
+      source: '/graphql/:path*',
+      destination: 'http://localhost:8080/graphql/:path*',
     },
   ]
 }
