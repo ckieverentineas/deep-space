@@ -1,7 +1,17 @@
 import Head from 'next/head'
+import { useGetUserQuery } from '../api/generated'
+
 import styles from '../styles/Home.module.css'
 
 export default function Home() {
+  const { data, loading, error } = useGetUserQuery({
+    variables: { id: 1 },
+  })
+
+  if (error) return <div>failed to load</div>
+  if (loading) return <div>loading...</div>
+  if (!data || !data.getUser) return <div>user not found</div>
+
   return (
     <div className={styles.container}>
       <Head>
@@ -11,7 +21,7 @@ export default function Home() {
 
       <main className={styles.main}>
         <h1 className={styles.title}>
-          You see deep space, but he not see you
+          {`Hello, ${data.getUser.name}`}
         </h1>
 
         <p className={styles.description}>
