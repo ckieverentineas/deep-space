@@ -1,17 +1,9 @@
+import Link from 'next/link'
 import Head from 'next/head'
 import { useGetUserQuery } from '../api/generated'
-
 import styles from '../styles/Home.module.css'
 
 export default function Home() {
-  const { data, loading, error } = useGetUserQuery({
-    variables: { id: 1 },
-  })
-
-  if (error) return <div>failed to load</div>
-  if (loading) return <div>loading...</div>
-  if (!data || !data.getUser) return <div>user not found</div>
-
   return (
     <div className={styles.container}>
       <Head>
@@ -21,7 +13,7 @@ export default function Home() {
 
       <main className={styles.main}>
         <h1 className={styles.title}>
-          {`Hello, ${data.getUser.name}`}
+          Welcome to the skip time
         </h1>
 
         <p className={styles.description}>
@@ -50,8 +42,13 @@ export default function Home() {
               Minig and build many!
             </p>
           </a>
-
-          <button>Enter</button>
+          <div className="regist">
+            <input id="email" type="text" placeholder="Your name"/>
+            <input id="password" type="text" placeholder="Your pass"/>
+          </div>
+          <div>
+            <button>Registration</button>
+          </div>
         </div>
       </main>
 

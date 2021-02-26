@@ -2,6 +2,13 @@ query GetUser($id: Int!) {
   getUser(id: $id) {
     id
     name
+  }
+}
+query AddUser($email: String!, $password: String!) {
+  addUser(email: $email, password: $password) {
+    id
+    name
     email
   }
 }
+
