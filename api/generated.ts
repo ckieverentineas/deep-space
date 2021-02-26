@@ -16,19 +16,26 @@ export type Scalars = {
 export type User = {
   __typename?: 'User';
   id: Scalars['Int'];
-  age: Scalars['Int'];
   name: Scalars['String'];
+  email: Scalars['String'];
 };
 
 export type Query = {
   __typename?: 'Query';
   hello: Scalars['String'];
   getUser?: Maybe<User>;
+  addUser?: Maybe<User>;
 };
 
 
 export type QueryGetUserArgs = {
   id: Scalars['Int'];
+};
+
+
+export type QueryAddUserArgs = {
+  email: Scalars['String'];
+  password: Scalars['String'];
 };
 
 export type GetUserQueryVariables = Exact<{
@@ -40,7 +47,7 @@ export type GetUserQuery = (
   { __typename?: 'Query' }
   & { getUser?: Maybe<(
     { __typename?: 'User' }
-    & Pick<User, 'id' | 'age' | 'name'>
+    & Pick<User, 'id' | 'name'>
   )> }
 );
 
@@ -49,7 +56,6 @@ export const GetUserDocument = gql`
     query GetUser($id: Int!) {
   getUser(id: $id) {
     id
-    age
     name
   }
 }
