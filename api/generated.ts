@@ -24,7 +24,6 @@ export type Query = {
   __typename?: 'Query';
   hello: Scalars['String'];
   getUser?: Maybe<User>;
-  addUser?: Maybe<User>;
 };
 
 
@@ -32,10 +31,16 @@ export type QueryGetUserArgs = {
   id: Scalars['Int'];
 };
 
+export type Mutation = {
+  __typename?: 'Mutation';
+  addUser?: Maybe<User>;
+};
 
-export type QueryAddUserArgs = {
+
+export type MutationAddUserArgs = {
   email: Scalars['String'];
   password: Scalars['String'];
+  name: Scalars['String'];
 };
 
 export type GetUserQueryVariables = Exact<{
@@ -51,14 +56,15 @@ export type GetUserQuery = (
   )> }
 );
 
-export type AddUserQueryVariables = Exact<{
+export type AddUserMutationVariables = Exact<{
   email: Scalars['String'];
   password: Scalars['String'];
+  name: Scalars['String'];
 }>;
 
 
-export type AddUserQuery = (
-  { __typename?: 'Query' }
+export type AddUserMutation = (
+  { __typename?: 'Mutation' }
   & { addUser?: Maybe<(
     { __typename?: 'User' }
     & Pick<User, 'id' | 'name' | 'email'>
@@ -101,38 +107,38 @@ export type GetUserQueryHookResult = ReturnType<typeof useGetUserQuery>;
 export type GetUserLazyQueryHookResult = ReturnType<typeof useGetUserLazyQuery>;
 export type GetUserQueryResult = Apollo.QueryResult<GetUserQuery, GetUserQueryVariables>;
 export const AddUserDocument = gql`
-    query AddUser($email: String!, $password: String!) {
-  addUser(email: $email, password: $password) {
+    mutation AddUser($email: String!, $password: String!, $name: String!) {
+  addUser(email: $email, password: $password, name: $name) {
     id
     name
     email
   }
 }
     `;
+export type AddUserMutationFn = Apollo.MutationFunction<AddUserMutation, AddUserMutationVariables>;
 
 /**
- * __useAddUserQuery__
+ * __useAddUserMutation__
  *
- * To run a query within a React component, call `useAddUserQuery` and pass it any options that fit your needs.
- * When your component renders, `useAddUserQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
+ * To run a mutation, you first call `useAddUserMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAddUserMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
  *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
  *
  * @example
- * const { data, loading, error } = useAddUserQuery({
+ * const [addUserMutation, { data, loading, error }] = useAddUserMutation({
  *   variables: {
  *      email: // value for 'email'
  *      password: // value for 'password'
+ *      name: // value for 'name'
  *   },
  * });
  */
-export function useAddUserQuery(baseOptions: Apollo.QueryHookOptions<AddUserQuery, AddUserQueryVariables>) {
-        return Apollo.useQuery<AddUserQuery, AddUserQueryVariables>(AddUserDocument, baseOptions);
+export function useAddUserMutation(baseOptions?: Apollo.MutationHookOptions<AddUserMutation, AddUserMutationVariables>) {
+        return Apollo.useMutation<AddUserMutation, AddUserMutationVariables>(AddUserDocument, baseOptions);
       }
-export function useAddUserLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<AddUserQuery, AddUserQueryVariables>) {
-          return Apollo.useLazyQuery<AddUserQuery, AddUserQueryVariables>(AddUserDocument, baseOptions);
-        }
-export type AddUserQueryHookResult = ReturnType<typeof useAddUserQuery>;
-export type AddUserLazyQueryHookResult = ReturnType<typeof useAddUserLazyQuery>;
-export type AddUserQueryResult = Apollo.QueryResult<AddUserQuery, AddUserQueryVariables>;
+export type AddUserMutationHookResult = ReturnType<typeof useAddUserMutation>;
+export type AddUserMutationResult = Apollo.MutationResult<AddUserMutation>;
+export type AddUserMutationOptions = Apollo.BaseMutationOptions<AddUserMutation, AddUserMutationVariables>;

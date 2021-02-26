@@ -24,7 +24,6 @@ export type Query = {
   __typename?: 'Query';
   hello: Scalars['String'];
   getUser?: Maybe<User>;
-  addUser?: Maybe<User>;
 };
 
 
@@ -32,10 +31,16 @@ export type QueryGetUserArgs = {
   id: Scalars['Int'];
 };
 
+export type Mutation = {
+  __typename?: 'Mutation';
+  addUser?: Maybe<User>;
+};
 
-export type QueryAddUserArgs = {
+
+export type MutationAddUserArgs = {
   email: Scalars['String'];
   password: Scalars['String'];
+  name: Scalars['String'];
 };
 
 export type WithIndex<TObject> = TObject & Record<string, any>;
@@ -108,6 +113,7 @@ export type ResolversTypes = ResolversObject<{
   Int: ResolverTypeWrapper<Scalars['Int']>;
   String: ResolverTypeWrapper<Scalars['String']>;
   Query: ResolverTypeWrapper<{}>;
+  Mutation: ResolverTypeWrapper<{}>;
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
 }>;
 
@@ -117,6 +123,7 @@ export type ResolversParentTypes = ResolversObject<{
   Int: Scalars['Int'];
   String: Scalars['String'];
   Query: {};
+  Mutation: {};
   Boolean: Scalars['Boolean'];
 }>;
 
@@ -130,12 +137,16 @@ export type UserResolvers<ContextType = any, ParentType extends ResolversParentT
 export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = ResolversObject<{
   hello?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   getUser?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, RequireFields<QueryGetUserArgs, 'id'>>;
-  addUser?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, RequireFields<QueryAddUserArgs, 'email' | 'password'>>;
+}>;
+
+export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = ResolversObject<{
+  addUser?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, RequireFields<MutationAddUserArgs, 'email' | 'password' | 'name'>>;
 }>;
 
 export type Resolvers<ContextType = any> = ResolversObject<{
   User?: UserResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
+  Mutation?: MutationResolvers<ContextType>;
 }>;
 
 

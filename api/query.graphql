@@ -4,8 +4,8 @@ query GetUser($id: Int!) {
     name
   }
 }
-query AddUser($email: String!, $password: String!) {
-  addUser(email: $email, password: $password) {
+mutation AddUser($email: String!, $password: String!, $name: String!) {
+  addUser(email: $email, password: $password, name: $name) {
     id
     name
     email

@@ -1,9 +1,10 @@
 import Link from 'next/link'
 import Head from 'next/head'
-import { useGetUserQuery } from '../api/generated'
+import { useAddUserMutation } from '../api/generated'
 import styles from '../styles/Home.module.css'
 
 export default function Home() {
+  const [addUser, { loading, error }] = useAddUserMutation()
   return (
     <div className={styles.container}>
       <Head>
@@ -43,11 +44,12 @@ export default function Home() {
             </p>
           </a>
           <div className="regist">
-            <input id="email" type="text" placeholder="Your name"/>
+            <input id="name" type="text" placeholder="Your name"/>
+            <input id="email" type="text" placeholder="Your email"/>
             <input id="password" type="text" placeholder="Your pass"/>
           </div>
           <div>
-            <button>Registration</button>
+            <button onClick={() => addUser({ variables: { email: 'email', password: 'password', name: 'name' } })}>Registration</button>
           </div>
         </div>
       </main>
