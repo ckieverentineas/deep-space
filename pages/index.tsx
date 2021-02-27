@@ -1,12 +1,18 @@
 import Link from 'next/link'
 import Head from 'next/head'
-import { useAddUserMutation } from '../api/generated'
+import { useAddUserMutation, useGetUserQuery } from '../api/generated'
 import styles from '../styles/Home.module.css'
 
 export default function Home() {
   const [addUser, { loading, error }] = useAddUserMutation()
-  return (
+  const { data } = useGetUserQuery({
+    variables: { email: 'email'}
+  })
+    return (
     <div className={styles.container}>
+      {loading && <div>lodaing...</div>}
+      {`Hello, ${data?.getUser?.name} `}
+      {`Your id, ${data?.getUser?.id}`}
       <Head>
         <title>DeepSpace</title>
         <link rel="icon" href="/favicon.ico" />
@@ -14,7 +20,8 @@ export default function Home() {
 
       <main className={styles.main}>
         <h1 className={styles.title}>
-          Welcome to the skip time
+          You see space, but he not see you
+          {data?.__typename}
         </h1>
 
         <p className={styles.description}>
@@ -49,7 +56,7 @@ export default function Home() {
             <input id="password" type="text" placeholder="Your pass"/>
           </div>
           <div>
-            <button onClick={() => addUser({ variables: { email: 'email', password: 'password', name: 'name' } })}>Registration</button>
+            <button onClick={() => addUser({ variables: { email: "", password: 'password', name: 'name' } })}>Registration</button>
           </div>
         </div>
       </main>

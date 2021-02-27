@@ -28,7 +28,7 @@ export type Query = {
 
 
 export type QueryGetUserArgs = {
-  id: Scalars['Int'];
+  email: Scalars['String'];
 };
 
 export type Mutation = {
@@ -44,7 +44,7 @@ export type MutationAddUserArgs = {
 };
 
 export type GetUserQueryVariables = Exact<{
-  id: Scalars['Int'];
+  email: Scalars['String'];
 }>;
 
 
@@ -52,7 +52,7 @@ export type GetUserQuery = (
   { __typename?: 'Query' }
   & { getUser?: Maybe<(
     { __typename?: 'User' }
-    & Pick<User, 'id' | 'name'>
+    & Pick<User, 'id' | 'name' | 'email'>
   )> }
 );
 
@@ -73,10 +73,11 @@ export type AddUserMutation = (
 
 
 export const GetUserDocument = gql`
-    query GetUser($id: Int!) {
-  getUser(id: $id) {
+    query GetUser($email: String!) {
+  getUser(email: $email) {
     id
     name
+    email
   }
 }
     `;
@@ -93,7 +94,7 @@ export const GetUserDocument = gql`
  * @example
  * const { data, loading, error } = useGetUserQuery({
  *   variables: {
- *      id: // value for 'id'
+ *      email: // value for 'email'
  *   },
  * });
  */

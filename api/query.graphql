@@ -1,7 +1,8 @@
-query GetUser($id: Int!) {
-  getUser(id: $id) {
+query GetUser($email: String!) {
+  getUser(email: $email) {
     id
     name
+    email
   }
 }
 mutation AddUser($email: String!, $password: String!, $name: String!) {
