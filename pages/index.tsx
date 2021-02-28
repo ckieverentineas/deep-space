@@ -2,11 +2,13 @@ import Link from 'next/link'
 import Head from 'next/head'
 import { useAddUserMutation, useGetUserQuery } from '../api/generated'
 import styles from '../styles/Home.module.css'
+import { parseBody } from 'next/dist/next-server/server/api-utils'
+import { parse, parseValue } from 'graphql'
+import { parser } from '@apollo/client'
 
 export default function Home() {
-  const [addUser, { loading, error }] = useAddUserMutation()
-  const { data } = useGetUserQuery({
-    variables: { email: 'email'}
+  const { data, loading } = useGetUserQuery({
+    variables: { email: 'jo@mo.r'}
   })
     return (
     <div className={styles.container}>
@@ -50,15 +52,8 @@ export default function Home() {
               Minig and build many!
             </p>
           </a>
-          <div className="regist">
-            <input id="name" type="text" placeholder="Your name"/>
-            <input id="email" type="text" placeholder="Your email"/>
-            <input id="password" type="text" placeholder="Your pass"/>
-          </div>
-          <div>
-            <button onClick={() => addUser({ variables: { email: "", password: 'password', name: 'name' } })}>Registration</button>
-          </div>
         </div>
+
       </main>
 
       <footer className={styles.footer}>
