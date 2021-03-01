@@ -13,7 +13,7 @@ export default function Auth() {
 
   return (
     <div className="App">
-        <div>{data?.login?.ok}</div>
+        <div>{String(data?.login?.ok)}</div>
       <form onSubmit={handleLogin}>
         <input
           type="email"
