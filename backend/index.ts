@@ -1,5 +1,6 @@
 import next from 'next';
 import express from 'express';
+import session from 'express-session';
 import { ApolloServer } from 'apollo-server-express';
 
 import { ResolverContext } from './context';
@@ -15,11 +16,27 @@ const DEV = process.env.NODE_ENV !== 'production';
 
   const server = express();
 
-  const context: ResolverContext = {
-    database,
-  };
+  server.use(
+    session({
+      secret: 'keyboard cat', // FIXME move to env file?
+      resave: false,
+      saveUninitialized: false,
+      cookie: { secure: !DEV },
+    }),
+  );
 
-  const apollo = new ApolloServer({ typeDefs, resolvers, context, playground: true });
+  const apollo = new ApolloServer({
+    typeDefs,
+    resolvers,
+    playground: DEV,
+    context({ req }): ResolverContext {
+      return {
+        database,
+        session: req.session as any,
+      };
+    },
+  });
+
   apollo.applyMiddleware({ app: server });
 
   if (!DEV) {

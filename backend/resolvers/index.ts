@@ -18,7 +18,7 @@ export const resolvers: Resolvers<ResolverContext> = {
       console.log('user added');
       return user;
     },
-    async login(_, args, { database }) {
+    async login(_, args, { database, session }) {
       const { userRepository } = database;
       const { email, password } = args;
       const user = await userRepository.findOne({ email, password });
