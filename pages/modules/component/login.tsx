@@ -4,7 +4,6 @@ import { useAddUserMutation, useLoginMutation } from "../../../api/generated";
 export default function Auth() {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
-  const [name, setName] = useState("")
   const [login, { data }] = useLoginMutation()
 
   const handleLogin = (e: FormEvent<HTMLFormElement>) => {
