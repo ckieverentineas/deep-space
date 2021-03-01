@@ -1,19 +1,17 @@
+import Link from 'next/link'
 import Head from 'next/head'
 import { useGetUserQuery } from '../api/generated'
-
 import styles from '../styles/Home.module.css'
 
 export default function Home() {
-  const { data, loading, error } = useGetUserQuery({
-    variables: { id: 1 },
+  const { data, loading } = useGetUserQuery({
+    variables: { email: 'jo@mo.r'}
   })
-
-  if (error) return <div>failed to load</div>
-  if (loading) return <div>loading...</div>
-  if (!data || !data.getUser) return <div>user not found</div>
-
-  return (
+    return (
     <div className={styles.container}>
+      {loading && <div>lodaing...</div>}
+      {`Hello, ${data?.getUser?.name} `}
+      {`Your id, ${data?.getUser?.id}`}
       <Head>
         <title>DeepSpace</title>
         <link rel="icon" href="/favicon.ico" />
@@ -21,7 +19,8 @@ export default function Home() {
 
       <main className={styles.main}>
         <h1 className={styles.title}>
-          {`Hello, ${data.getUser.name}`}
+          You see space, but he not see you
+          {data?.__typename}
         </h1>
 
         <p className={styles.description}>
@@ -50,9 +49,8 @@ export default function Home() {
               Minig and build many!
             </p>
           </a>
-
-          <button>Enter</button>
         </div>
+
       </main>
 
       <footer className={styles.footer}>

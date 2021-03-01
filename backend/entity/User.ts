@@ -9,7 +9,10 @@ export class User {
   name!: string
 
   @Column()
-  age!: number
+  email!: string
+
+  @Column()
+  password!: string
 }
 
 export default User

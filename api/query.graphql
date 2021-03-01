@@ -1,7 +1,20 @@
-query GetUser($id: Int!) {
-  getUser(id: $id) {
+query GetUser($email: String!) {
+  getUser(email: $email) {
     id
-    age
     name
+    email
   }
 }
+mutation AddUser($email: String!, $password: String!, $name: String!) {
+  addUser(email: $email, password: $password, name: $name) {
+    id
+    name
+    email
+  }
+}
+mutation Login($email: String!, $password: String!) {
+  login(email: $email, password: $password) {
+    ok
+  }
+}
+
