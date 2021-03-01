@@ -1,5 +1,5 @@
-import { Database } from './database'
+import { Database } from './database';
 
 export interface ResolverContext {
-  database: Database
+  database: Database;
 }
