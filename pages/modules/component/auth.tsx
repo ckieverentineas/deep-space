@@ -5,7 +5,7 @@ export default function Auth() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
-  const [addUser, { loading, error }] = useAddUserMutation()
+  const [addUser, { data, loading, error }] = useAddUserMutation()
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -14,6 +14,7 @@ export default function Auth() {
 
   return (
     <div className="App">
+      <div>{data?.addUser?.email}</div>
       <form onSubmit={handleSubmit}>
         <input
           type="email"

@@ -7,11 +7,16 @@ export const typeDefs = gql`
     email: String!
   }
 
+  type AuthResponse {
+    ok: Boolean!
+  }
+
   type Query {
     hello: String!
     getUser(email: String!): User
   }
   type Mutation {
     addUser(email: String!, password: String!, name: String!): User
+    login(email: String!, password: String!): AuthResponse!
   }
 `

@@ -1,3 +1,4 @@
+import { ok } from 'assert'
 import { ResolverContext } from '../context'
 import { Resolvers } from '../generated/graphql'
 
@@ -17,6 +18,13 @@ export const resolvers: Resolvers<ResolverContext> = {
       const user = await userRepository.save({ email, password, name })
       console.log('user added')
       return user
+    },
+    async login(_, args, { database }) {
+      const { userRepository } = database
+      const { email, password } = args
+      const user = await userRepository.findOne({ email, password })
+      console.log('login success')
+      return { ok: user !== undefined }
     },
   }
 }
