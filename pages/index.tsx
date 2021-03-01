@@ -1,10 +1,7 @@
 import Link from 'next/link'
 import Head from 'next/head'
-import { useAddUserMutation, useGetUserQuery } from '../api/generated'
+import { useGetUserQuery } from '../api/generated'
 import styles from '../styles/Home.module.css'
-import { parseBody } from 'next/dist/next-server/server/api-utils'
-import { parse, parseValue } from 'graphql'
-import { parser } from '@apollo/client'
 
 export default function Home() {
   const { data, loading } = useGetUserQuery({

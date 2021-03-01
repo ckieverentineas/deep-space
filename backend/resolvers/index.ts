@@ -1,4 +1,3 @@
-import { ok } from 'assert'
 import { ResolverContext } from '../context'
 import { Resolvers } from '../generated/graphql'
 
