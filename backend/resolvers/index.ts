@@ -9,6 +9,16 @@ export const resolvers: Resolvers<ResolverContext> = {
       const user = await userRepository.findOne({ where: { email } });
       return user || null;
     },
+    async me(_, args, { database, session }) {
+      const { userId } = session;
+      if (userId === undefined) {
+        return null;
+      } else {
+        const { userRepository } = database;
+        const user = await userRepository.findOne({ where: { id: userId } });
+        return user || null;
+      }
+    },
   },
   Mutation: {
     async addUser(_, args, { database }) {
@@ -22,8 +32,12 @@ export const resolvers: Resolvers<ResolverContext> = {
       const { userRepository } = database;
       const { email, password } = args;
       const user = await userRepository.findOne({ email, password });
-      console.log('login success');
-      return { ok: user !== undefined };
+      if (user) {
+        console.log('login success');
+        session.userId = user.id;
+        return { ok: true };
+      }
+      return { ok: false };
     },
   },
 };

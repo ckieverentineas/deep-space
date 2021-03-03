@@ -12,6 +12,7 @@ export const typeDefs = gql`
   }
 
   type Query {
+    me: User
     hello: String!
     getUser(email: String!): User
   }

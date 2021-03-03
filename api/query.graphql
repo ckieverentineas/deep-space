@@ -5,6 +5,13 @@ query GetUser($email: String!) {
     email
   }
 }
+query Me {
+  me {
+    id
+    name
+    email
+  }
+}
 mutation AddUser($email: String!, $password: String!, $name: String!) {
   addUser(email: $email, password: $password, name: $name) {
     id
@@ -17,4 +24,3 @@ mutation Login($email: String!, $password: String!) {
     ok
   }
 }
-

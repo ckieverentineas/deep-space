@@ -1,13 +1,13 @@
-import Link from 'next/link'
-import Head from 'next/head'
-import { useGetUserQuery } from '../api/generated'
-import styles from '../styles/Home.module.css'
+import Link from 'next/link';
+import Head from 'next/head';
+import { useGetUserQuery } from '../api/generated';
+import styles from '../styles/Home.module.css';
 
 export default function Home() {
   const { data, loading } = useGetUserQuery({
-    variables: { email: 'jo@mo.r'}
-  })
-    return (
+    variables: { email: 'jo@mo.r' },
+  });
+  return (
     <div className={styles.container}>
       {loading && <div>lodaing...</div>}
       {`Hello, ${data?.getUser?.name} `}
@@ -23,9 +23,7 @@ export default function Home() {
           {data?.__typename}
         </h1>
 
-        <p className={styles.description}>
-          Play free and now
-        </p>
+        <p className={styles.description}>Play free and now</p>
 
         <div className={styles.grid}>
           <a href="" className={styles.card}>
@@ -45,17 +43,18 @@ export default function Home() {
 
           <a href="" className={styles.card}>
             <h3>Construct &rarr;</h3>
-            <p>
-              Minig and build many!
-            </p>
+            <p>Minig and build many!</p>
           </a>
         </div>
-
+        <Link href="/modules/component/auth">
+          <a>Register</a>
+        </Link>
+        <Link href="/modules/component/login">
+          <a>Login</a>
+        </Link>
       </main>
 
-      <footer className={styles.footer}>
-        The Federation Corporatoion 2021
-      </footer>
+      <footer className={styles.footer}>The Federation Corporatoion 2021</footer>
     </div>
-  )
+  );
 }
